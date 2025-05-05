@@ -43,7 +43,20 @@ public class ProductController {
 
     }
 
-    
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> getProductById(@PathVariable Long id) {
+        try {
+            ProductDto product = this.productService.getProductById(id);
+            if (product != null) {
+                return ApiResponse.jsonResponse(HttpStatus.OK, ResponseMessage.OK.getMessage(), product);
+            }
+            return ApiResponse.jsonResponse(HttpStatus.OK, ResponseMessage.EMPTY.getMessage(), product);
+        } catch (Exception e) {
+            return ApiResponse.jsonResponse(HttpStatus.INTERNAL_SERVER_ERROR, ResponseMessage.ERROR.getMessage(),
+                    e.getMessage());
+        }
+
+    }
 
     @PostMapping
     public ResponseEntity<Map<String, Object>> createProduct(@RequestBody ProductDto product) {

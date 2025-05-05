@@ -50,7 +50,7 @@ public class PaymentOrderServiceImp implements PaymentOrderService {
         if (Validator.isCardNumberValid(order.getCardNumber()) && Validator.isExpiringDateValid(expiringDate)) {
             PaymentOrder newOrder = new PaymentOrder();
             newOrder.setAmount(order.getAmount());
-            newOrder.setPaymentdate(new Date()); //POSIBLE QUITAR
+            newOrder.setPaymentDate(new Date()); //POSIBLE QUITAR
             newOrder.setStatus(PaymentStatus.APROBADO);
             Order orderFound = this.orderRepository.findById(order.getOrderId())
             .orElse(null);

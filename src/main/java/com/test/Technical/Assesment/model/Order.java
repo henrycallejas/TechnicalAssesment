@@ -4,6 +4,10 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
@@ -12,6 +16,10 @@ import java.util.List;
 @Entity
 @Table(name = "ORDERS")
 @ToString
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
 
     @Id
@@ -35,51 +43,4 @@ public class Order {
     @JsonManagedReference
     private List<OrderDetail> orderDetails;
 
-    public Order() {
-    }
-
-    public Order(Client client, Date orderDate) {
-        this.client = client;
-        this.orderDate = orderDate;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public List<PaymentOrder> getPaymentOrders() {
-        return paymentOrders;
-    }
-
-    public void setPaymentOrders(List<PaymentOrder> paymentOrders) {
-        this.paymentOrders = paymentOrders;
-    }
-
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
-
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
 }

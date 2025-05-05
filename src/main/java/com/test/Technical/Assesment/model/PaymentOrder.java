@@ -4,11 +4,20 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.test.Technical.Assesment.enums.PaymentStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "PAYMENT_ORDER")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PaymentOrder {
 
     @Id
@@ -31,53 +40,4 @@ public class PaymentOrder {
     @Column(nullable = false)
     private PaymentStatus status;
 
-    public PaymentOrder() {
-    }
-
-    public PaymentOrder(Order order, BigDecimal amount, Date paymentDate, PaymentStatus status) {
-        this.order = order;
-        this.amount = amount;
-        this.paymentDate = paymentDate;
-        this.status = status;
-    }
-
-    public Long getPaymentOrderId() {
-        return paymentOrderId;
-    }
-
-    public void setPaymentOrderId(Long paymentOrderId) {
-        this.paymentOrderId = paymentOrderId;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentdate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public PaymentStatus getStatus(){
-        return this.status;
-    }
-
-    public void setStatus(PaymentStatus status){
-        this.status = status;
-    }
 }

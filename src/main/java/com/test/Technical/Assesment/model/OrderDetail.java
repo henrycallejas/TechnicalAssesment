@@ -1,11 +1,7 @@
 package com.test.Technical.Assesment.model;
 import java.math.BigDecimal;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

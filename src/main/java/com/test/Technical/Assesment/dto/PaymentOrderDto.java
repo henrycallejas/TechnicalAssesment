@@ -3,11 +3,7 @@ package com.test.Technical.Assesment.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import com.test.Technical.Assesment.enums.PaymentStatus;
-import com.test.Technical.Assesment.model.PaymentOrder;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

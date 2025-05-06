@@ -29,16 +29,12 @@ public class CardValidator {
     }
 
     public static boolean isExpiringDateValid(String dateMMYY) {
-        System.out.println("INPUT: " + dateMMYY);
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
             YearMonth inputDate = YearMonth.parse(dateMMYY, formatter);
-            System.out.println("FECHA: " + inputDate);
             YearMonth currentDate = YearMonth.now();
-            System.out.println("FECHA VALIDA");
             return !inputDate.isBefore(currentDate);
         } catch (DateTimeParseException e) {
-            System.out.println("FECHA NO VALIDA");
             return false;
         }
     }

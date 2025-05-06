@@ -1,4 +1,4 @@
-package com.test.Technical.Assesment.model;
+package com.test.Technical.Assesment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

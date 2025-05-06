@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.Technical.Assesment.dto.OrderDetailDto;
 import com.test.Technical.Assesment.enums.ResponseMessage;
 import com.test.Technical.Assesment.model.Order;
 import com.test.Technical.Assesment.model.OrderDetail;
-import com.test.Technical.Assesment.model.OrderDetailDto;
 import com.test.Technical.Assesment.service.OrderServiceImp;
 import com.test.Technical.Assesment.utils.ApiResponse;
 

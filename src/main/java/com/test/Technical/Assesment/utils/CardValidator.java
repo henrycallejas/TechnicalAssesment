@@ -4,7 +4,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class Validator {
+public class CardValidator {
 
     public static boolean isCardNumberValid(String cardNumber) {
         cardNumber = cardNumber.replaceAll("\\s+", ""); 

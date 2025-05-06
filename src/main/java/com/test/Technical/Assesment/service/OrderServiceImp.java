@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.test.Technical.Assesment.dto.OrderDetailDto;
+import com.test.Technical.Assesment.dto.ProductDto;
 import com.test.Technical.Assesment.model.Client;
 import com.test.Technical.Assesment.model.Order;
 import com.test.Technical.Assesment.model.OrderDetail;
-import com.test.Technical.Assesment.model.OrderDetailDto;
 import com.test.Technical.Assesment.model.Product;
-import com.test.Technical.Assesment.model.ProductDto;
 import com.test.Technical.Assesment.repository.ClientRepository;
 import com.test.Technical.Assesment.repository.OrderDetailRepository;
 import com.test.Technical.Assesment.repository.OrderRepository;

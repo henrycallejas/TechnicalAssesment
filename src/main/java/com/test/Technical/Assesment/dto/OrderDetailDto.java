@@ -1,5 +1,8 @@
-package com.test.Technical.Assesment.model;
+package com.test.Technical.Assesment.dto;
 import java.math.BigDecimal;
+
+import com.test.Technical.Assesment.model.Order;
+import com.test.Technical.Assesment.model.OrderDetail;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

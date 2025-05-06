@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.test.Technical.Assesment.dto.ProductDto;
 import com.test.Technical.Assesment.model.Product;
-import com.test.Technical.Assesment.model.ProductDto;
 import com.test.Technical.Assesment.repository.ProductRepository;
 import com.test.Technical.Assesment.utils.Request;
 

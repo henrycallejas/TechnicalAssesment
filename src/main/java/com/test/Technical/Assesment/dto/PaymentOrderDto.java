@@ -1,4 +1,4 @@
-package com.test.Technical.Assesment.model;
+package com.test.Technical.Assesment.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;

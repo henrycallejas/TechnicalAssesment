@@ -28,7 +28,7 @@ public class Request {
 
             return content;
         } catch (Exception e) {
-            throw new RuntimeException("Error al llamar la API: " + e.getMessage(), e);
+            throw new RuntimeException("Error: " + e.getMessage(), e);
         }
     }
 }

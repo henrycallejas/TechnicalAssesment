@@ -1,4 +1,4 @@
-package com.test.Technical.Assesment.controllers;
+package com.test.Technical.Assesment.Controllers;
 
 import java.util.List;
 import java.util.Map;

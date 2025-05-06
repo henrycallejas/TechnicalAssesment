@@ -15,7 +15,7 @@ import com.test.Technical.Assesment.model.Order;
 import com.test.Technical.Assesment.model.PaymentOrder;
 import com.test.Technical.Assesment.repository.OrderRepository;
 import com.test.Technical.Assesment.repository.PaymentOrderRepository;
-import com.test.Technical.Assesment.utils.Validator;
+import com.test.Technical.Assesment.utils.CardValidator;
 
 @Service
 public class PaymentOrderServiceImp implements PaymentOrderService {
@@ -47,7 +47,7 @@ public class PaymentOrderServiceImp implements PaymentOrderService {
             expiringmonth = order.getExpiringMonth().toString();
         }
         String expiringDate = expiringmonth + order.getExpiringYear();
-        if (Validator.isCardNumberValid(order.getCardNumber()) && Validator.isExpiringDateValid(expiringDate)) {
+        if (CardValidator.isCardNumberValid(order.getCardNumber()) && CardValidator.isExpiringDateValid(expiringDate)) {
             PaymentOrder newOrder = new PaymentOrder();
             newOrder.setAmount(order.getAmount());
             newOrder.setPaymentDate(new Date()); //POSIBLE QUITAR
@@ -58,10 +58,10 @@ public class PaymentOrderServiceImp implements PaymentOrderService {
             response.put("response", this.paymentOrderRepository.save(newOrder));
             return response;
         }
-        if(!Validator.isCardNumberValid(order.getCardNumber())){
+        if(!CardValidator.isCardNumberValid(order.getCardNumber())){
             response.put("response", "Número de tarjeta no válido.");
             return response;
-        }else if(!Validator.isExpiringDateValid(expiringDate)){
+        }else if(!CardValidator.isExpiringDateValid(expiringDate)){
             response.put("response", "Fecha de expiración no válida.");
             return response;
         }

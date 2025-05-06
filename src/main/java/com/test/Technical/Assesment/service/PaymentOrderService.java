@@ -9,6 +9,6 @@ import com.test.Technical.Assesment.model.PaymentOrder;
 public interface PaymentOrderService {
 List<PaymentOrder> getAllPaymentOrders();
 PaymentOrder getPaymentOrderById(Long id);
-Map<String, Object> createPaymentOrder(PaymentOrderDto order);
+Map<String, Object> processPayment(Long clientId, PaymentOrderDto order);
 PaymentOrder updatePaymentOrder(PaymentOrderDto order);
 }

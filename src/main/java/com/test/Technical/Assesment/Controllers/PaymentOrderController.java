@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.test.Technical.Assesment.dto.PaymentOrderDto;
 import com.test.Technical.Assesment.enums.ResponseMessage;
+import com.test.Technical.Assesment.model.Order;
 import com.test.Technical.Assesment.model.PaymentOrder;
 import com.test.Technical.Assesment.service.PaymentOrderServiceImp;
 import com.test.Technical.Assesment.utils.ApiResponse;
@@ -55,21 +56,21 @@ public class PaymentOrderController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Map<String, Object>> createPaymentOrder(@RequestBody PaymentOrderDto order) {
-        Map<String, Object> response = this.paymentOrderService.createPaymentOrder(order);
-        PaymentOrder createdOrder = new PaymentOrder();
+    @PostMapping("/{clientId}")
+    public ResponseEntity<Map<String, Object>> processPayment(
+    @PathVariable Long clientId, @RequestBody PaymentOrderDto order) {
+        Map<String, Object> response = this.paymentOrderService.processPayment(clientId, order);
+        Order createdOrder = new Order();
         Map<String, Object> errorResponse = new HashMap<>();
 
         try {
-            createdOrder = (PaymentOrder) response.get("response");
+            createdOrder = (Order) response.get("response");
             errorResponse.put("response", createdOrder);
             return ApiResponse.jsonResponse(HttpStatus.CREATED, ResponseMessage.CREATED.getMessage(), errorResponse);
         } catch (Exception e) {
             String resp = (String) response.get("response");
             return ApiResponse.jsonResponse(HttpStatus.BAD_REQUEST, ResponseMessage.ERROR.getMessage(), resp);
         }
-
     }
 
     @PutMapping

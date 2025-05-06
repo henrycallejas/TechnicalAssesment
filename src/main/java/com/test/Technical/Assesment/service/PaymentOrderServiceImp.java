@@ -1,20 +1,28 @@
 package com.test.Technical.Assesment.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.Technical.Assesment.dto.PaymentOrderDto;
 import com.test.Technical.Assesment.enums.PaymentStatus;
+import com.test.Technical.Assesment.model.Client;
 import com.test.Technical.Assesment.model.Order;
+import com.test.Technical.Assesment.model.OrderDetail;
 import com.test.Technical.Assesment.model.PaymentOrder;
+import com.test.Technical.Assesment.model.Product;
+import com.test.Technical.Assesment.repository.ClientRepository;
 import com.test.Technical.Assesment.repository.OrderRepository;
 import com.test.Technical.Assesment.repository.PaymentOrderRepository;
+import com.test.Technical.Assesment.repository.ProductRepository;
 import com.test.Technical.Assesment.utils.CardValidator;
 
 @Service
@@ -25,6 +33,12 @@ public class PaymentOrderServiceImp implements PaymentOrderService {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    ClientRepository clientRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @Override
     public List<PaymentOrder> getAllPaymentOrders() {
@@ -38,30 +52,49 @@ public class PaymentOrderServiceImp implements PaymentOrderService {
     }
 
     @Override
-    public Map<String, Object> createPaymentOrder(PaymentOrderDto order) {
-        String expiringmonth = "";
+    public Map<String, Object> processPayment(Long clientId, PaymentOrderDto detailsDto) {
         Map<String, Object> response = new HashMap<>();
-        if(order.getExpiringMonth() <= 9){
-            expiringmonth = "0" + order.getExpiringMonth().toString() + "/";
-        }else{
-            expiringmonth = order.getExpiringMonth().toString();
-        }
-        String expiringDate = expiringmonth + order.getExpiringYear();
-        if (CardValidator.isCardNumberValid(order.getCardNumber()) && CardValidator.isExpiringDateValid(expiringDate)) {
-            PaymentOrder newOrder = new PaymentOrder();
-            newOrder.setAmount(order.getAmount());
-            newOrder.setPaymentDate(new Date()); //POSIBLE QUITAR
-            newOrder.setStatus(PaymentStatus.APROBADO);
-            Order orderFound = this.orderRepository.findById(order.getOrderId())
-            .orElse(null);
-            newOrder.setOrder(orderFound);
-            response.put("response", this.paymentOrderRepository.save(newOrder));
+        String expiringDate = CardValidator.getExpiringDate(detailsDto);
+
+        if (CardValidator.isCardNumberValid(detailsDto.getCardNumber())
+                && CardValidator.isExpiringDateValid(expiringDate)) {
+            Client client = this.clientRepository.findById(clientId)
+                    .orElseThrow(() -> new RuntimeException("Client not found"));
+            Order newOrder = new Order();
+            newOrder.setClient(client);
+            newOrder.setOrderDate(new Date());
+
+            List<OrderDetail> details = detailsDto.getDetails().stream().map(dto -> {
+                OrderDetail detail = new OrderDetail();
+                detail.setAmount(dto.getAmount());
+                detail.setUnitPrice(dto.getUnitPrice());
+                detail.setOrder(newOrder);
+                Product product = this.productRepository.findById(dto.getProductId()).get();
+                detail.setProduct(product);
+                return detail;
+            }).collect(Collectors.toList());
+            newOrder.setOrderDetails(details);
+            Order orderCreated = this.orderRepository.save(newOrder);
+
+            PaymentOrder paymentOrder = new PaymentOrder();
+            paymentOrder.setPaymentDate(new Date());
+            paymentOrder.setStatus(PaymentStatus.APROBADO);
+            BigDecimal totalAmount = details.stream()
+                    .map(d -> d.getUnitPrice().multiply(BigDecimal.valueOf(d.getAmount())))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            paymentOrder.setTotalAmount(totalAmount);
+            paymentOrder.setOrder(orderCreated);
+            this.paymentOrderRepository.save(paymentOrder);
+
+            List<PaymentOrder> paymentOrders = this.paymentOrderRepository.findByOrder(orderCreated);
+            orderCreated.setPaymentOrders(paymentOrders);
+            response.put("response", orderCreated);
             return response;
         }
-        if(!CardValidator.isCardNumberValid(order.getCardNumber())){
+        if (!CardValidator.isCardNumberValid(detailsDto.getCardNumber())) {
             response.put("response", "Número de tarjeta no válido.");
             return response;
-        }else if(!CardValidator.isExpiringDateValid(expiringDate)){
+        } else if (!CardValidator.isExpiringDateValid(expiringDate)) {
             response.put("response", "Fecha de expiración no válida.");
             return response;
         }

@@ -30,8 +30,8 @@ public class PaymentOrder {
     @JsonBackReference
     private Order order;
 
-    @Column(name = "AMOUNT")
-    private BigDecimal amount;
+    @Column(name = "TOTAL_AMOUNT")
+    private BigDecimal totalAmount;
 
     @Column(name = "PAYMENT_DATE")
     private Date paymentDate;

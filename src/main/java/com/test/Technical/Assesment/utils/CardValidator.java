@@ -4,6 +4,8 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import com.test.Technical.Assesment.dto.PaymentOrderDto;
+
 public class CardValidator {
 
     public static boolean isCardNumberValid(String cardNumber) {
@@ -37,5 +39,16 @@ public class CardValidator {
         } catch (DateTimeParseException e) {
             return false;
         }
+    }
+
+    public static String getExpiringDate(PaymentOrderDto detailsDto){
+        String expiringmonth = "";
+        if (detailsDto.getExpiringMonth() <= 9) {
+            expiringmonth = "0" + detailsDto.getExpiringMonth().toString() + "/";
+        } else {
+            expiringmonth = detailsDto.getExpiringMonth().toString();
+        }
+        String expiringDate = expiringmonth + detailsDto.getExpiringYear();
+        return expiringDate;
     }
 }

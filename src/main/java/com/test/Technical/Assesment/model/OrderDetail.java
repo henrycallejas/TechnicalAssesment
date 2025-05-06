@@ -34,11 +34,9 @@ public class OrderDetail {
     private Product product;
 
     @Column(name = "AMOUNT")
-    @NotBlank
     private Integer amount;
 
     @Column(name = "UNIT_PRICE")
-    @NotBlank
     private BigDecimal unitPrice;
 
 }
